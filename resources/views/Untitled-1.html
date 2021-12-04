@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Conversor de Monedas</title>
+ 
+    <style>
+        form span {
+            display:block;
+            float:left;
+            width:180px;
+        }
+        input {text-align:right;}
+    </style>
+</head>
+ 
+<body>
+    <h1>Conversor</h1>
+    <form>
+ 
+        <br><span>Ingrese la cantidad de Dolares</span>
+            <input id="dolar" placeholder="dolares">
+            <br>
+            <br>
+ 
+        <br><span>Resultado en Lempiras</span>
+            <input id="resu" >
+            <br>
+            <br>
+            <div style="text-align: left;">
+            <button type="button" onclick="Functionc()">calcular</button>
+           </div>
+           <p id="total"></p>
+
+           
+    </form>
+
+
+    
+
+<script>
+          
+  function Functionc() {
+    var x , res ;
+
+            x = document.getElementById("dolar").value;
+
+
+                res= parseFloat(x) * 24.8737;
+                
+
+
+                document.getElementById("resu").value = res;
+
+  }
+
+</script>
+
+</body>
+
+</html>
