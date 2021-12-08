@@ -2,85 +2,44 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Grado_profesor;
-use App\Http\Requests\StoreGrado_profesorRequest;
-use App\Http\Requests\UpdateGrado_profesorRequest;
+use App\Models\GradoProfesor;
+use App\Models\Grado;
+use App\Models\Profesor;
+use Illuminate\Http\Request;
 
 class GradoProfesorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    public function gp(){
+        $grados=Grado::all();
+        $profesors=Profesor::all();
+        return view ('GradoProfesor')
+        ->with('grados',$grados)
+        ->with('profesors',$profesors);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+   public function store(Request $request){
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreGrado_profesorRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreGrado_profesorRequest $request)
-    {
-        //
-    }
+    //VALIDAR LOS CAMPOS
+   $request->validate([
+    'grado_id'=>'required | numeric',
+    'profesor_id'=>'required |numeric'
+   ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Grado_profesor  $grado_profesor
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Grado_profesor $grado_profesor)
-    {
-        //
-    }
+    //SE CREA EL OBJETO
+   $nuevoGradoProfesor = new GradoProfesor();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Grado_profesor  $grado_profesor
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Grado_profesor $grado_profesor)
-    {
-        //
-    }
+    //FORMULARIO
+    $nuevoGradoProfesor->grado_id=$request->input('grado_id');
+    $nuevoGradoProfesor->profesor_id=$request->input('profesor_id');
+   
+    //PARA VERIFICAR SI SE CREO CORRECTAMENTE
+   $creado =  $nuevoGradoProfesor->save();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateGrado_profesorRequest  $request
-     * @param  \App\Models\Grado_profesor  $grado_profesor
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateGrado_profesorRequest $request, Grado_profesor $grado_profesor)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Grado_profesor  $grado_profesor
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Grado_profesor $grado_profesor)
-    {
-        //
+   if ($creado){
+    return redirect('/Grados/')->with('mensaje', 'El GradoProfesor fue creado exitosamente');
+   // return redirect()->route('alumno.index')->with('mensaje', 'El Alumno fue creado exitosamente');
+   //} else {
+       //Retornar con un mensaje de error
+   }
     }
 }
